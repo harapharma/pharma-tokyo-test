@@ -5,7 +5,7 @@
 
 void main( void )
 {
-	printf("Hello Git¥n");
+	printf("Hello Git world¥n");
 	
 	return;
 }
