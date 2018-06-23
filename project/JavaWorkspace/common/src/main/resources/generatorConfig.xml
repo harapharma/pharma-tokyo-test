@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+  <classPathEntry location="C:\Users\Rei Kitahara\.m2\repository\mysql\mysql-connector-java\5.1.45\mysql-connector-java-5.1.45.jar" />
+  <context id="common">
+    <jdbcConnection connectionURL="jdbc:mysql://localhost:3306/COMMON?useSSL=false" driverClass="com.mysql.jdbc.Driver" password="p@ssw0rd" userId="common" />
+    <javaModelGenerator targetPackage="jp.co.pds.common.dao.dto" targetProject="src/main/java/" />
+    <sqlMapGenerator targetPackage="jp.co.pds.common.dao.mapper" targetProject="src/main/java/" />
+    <javaClientGenerator targetPackage="jp.co.pds.common.dao.mapper" targetProject="src/main/java/" type="XMLMAPPER" />
+<!--     <table schema="COMMON" tableName="MS_COMPANY"><columnOverride column="DATETIME" javaType="java.util.Calendar" /></table> -->
+<!--     <table schema="COMMON" tableName="MS_COMPANY_GROUP"><columnOverride column="DATETIME" javaType="java.util.Calendar" /></table> -->
+<!--     <table schema="COMMON" tableName="MS_GROUP"><columnOverride column="DATETIME" javaType="java.util.Calendar" /></table> -->
+<!--     <table schema="COMMON" tableName="MS_USER"><columnOverride column="DATETIME" javaType="java.util.Calendar" /></table> -->
+<!--     <table schema="COMMON" tableName="MS_GROUP_USER"><columnOverride column="DATETIME" javaType="java.util.Calendar" /></table> -->
+<!--     <table schema="COMMON" tableName="DT_PSWD_HISTORY"><columnOverride column="DATETIME" javaType="java.util.Calendar" /></table> -->
+<!--     <table schema="COMMON" tableName="DT_LOGIN_HISTORY"><columnOverride column="DATETIME" javaType="java.util.Calendar" /></table> -->
+<!--     <table schema="COMMON" tableName="MS_MESSAGE"><columnOverride column="DATETIME" javaType="java.util.Calendar" /></table> -->
+<!--     <table schema="COMMON" tableName="MS_SEQ"><columnOverride column="DATETIME" javaType="java.util.Calendar" /></table> -->
+<!--     <table schema="COMMON" tableName="MS_DATE"><columnOverride column="DATETIME" javaType="java.util.Calendar" /></table> -->
+    <table schema="COMMON" tableName="dummy"/>
+  </context>
+  <context id="pj0001">
+    <jdbcConnection connectionURL="jdbc:mysql://localhost:3306/PJ0001?useSSL=false" driverClass="com.mysql.jdbc.Driver" password="p@ssw0rd" userId="pj0001" />
+    <javaModelGenerator targetPackage="jp.co.pds.common.dao.dto" targetProject="src/main/java/" />
+    <sqlMapGenerator targetPackage="jp.co.pds.common.dao.mapper" targetProject="src/main/java/" />
+    <javaClientGenerator targetPackage="jp.co.pds.common.dao.mapper" targetProject="src/main/java/" type="XMLMAPPER" />
+<!--     <table schema="PJ0001" tableName="MS_QUESTION_GROUP"><columnOverride column="DATETIME" javaType="java.util.Calendar" /></table> -->
+<!--     <table schema="PJ0001" tableName="MS_GROUP_QUESTION_GROUP"><columnOverride column="DATETIME" javaType="java.util.Calendar" /></table> -->
+<!--     <table schema="PJ0001" tableName="MS_QUESTION_GROUP_QUESTION"><columnOverride column="DATETIME" javaType="java.util.Calendar" /></table> -->
+<!--     <table schema="PJ0001" tableName="MS_QUESTION"><columnOverride column="DATETIME" javaType="java.util.Calendar" /></table> -->
+<!--     <table schema="PJ0001" tableName="DT_ANSWER"><columnOverride column="DATETIME" javaType="java.util.Calendar" /></table> -->
+<!--     <table schema="PJ0001" tableName="DT_ANSWER_DETAIL"><columnOverride column="DATETIME" javaType="java.util.Calendar" /></table> -->
+    <table schema="PJ0001" tableName="dummy"/>
+  </context>
+  <context id="pj0002">
+    <jdbcConnection connectionURL="jdbc:mysql://localhost:3306/PJ0002?useSSL=false" driverClass="com.mysql.jdbc.Driver" password="p@ssw0rd" userId="pj0002" />
+    <javaModelGenerator targetPackage="jp.co.pds.common.dao.dto" targetProject="src/main/java/" />
+    <sqlMapGenerator targetPackage="jp.co.pds.common.dao.mapper" targetProject="src/main/java/" />
+    <javaClientGenerator targetPackage="jp.co.pds.common.dao.mapper" targetProject="src/main/java/" type="XMLMAPPER" />
+<!--     <table schema="PJ0002" tableName="MS_GROUP_REST_TIME"><columnOverride column="DATETIME" javaType="java.util.Calendar" /></table> -->
+<!--     <table schema="PJ0002" tableName="MS_REST_TIME"><columnOverride column="DATETIME" javaType="java.util.Calendar" /></table> -->
+<!--     <table schema="PJ0002" tableName="MS_COMPANY_ACCOUNT_TITLE"><columnOverride column="DATETIME" javaType="java.util.Calendar" /></table> -->
+<!--     <table schema="PJ0002" tableName="MS_ACCOUNT_TITLE"><columnOverride column="DATETIME" javaType="java.util.Calendar" /></table> -->
+<!--     <table schema="PJ0002" tableName="DT_WORK_TIME"><columnOverride column="DATETIME" javaType="java.util.Calendar" /></table> -->
+<!--     <table schema="PJ0002" tableName="DT_TRANSPORT_EXPENSE"><columnOverride column="DATETIME" javaType="java.util.Calendar" /></table> -->
+<!--     <table schema="PJ0002" tableName="DT_EXPENSE_ADJSTMNT"><columnOverride column="DATETIME" javaType="java.util.Calendar" /></table> -->
+    <table schema="PJ0002" tableName="dummy"/>
+  </context>
+</generatorConfiguration>
