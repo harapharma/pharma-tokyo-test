@@ -1,0 +1,11 @@
+<header th:fragment="header" class="header">
+<div class="hTop">
+  <div class="hUserId" th:text="'UID:' + ${commonContext.userId}"></div>
+  <div class="hInfo">&nbsp;</div>
+  <div class="hLogout"><input type="button" class="smallButton" name="logout" value="LOGOUT" onclick="OnLogoutClick('/PJ0001/');"/></div>
+</div>
+<div class="hBottom">
+  <div class="hLoginDateTime" th:text="${commonContext.loginDateTime}"></div>
+  <div class="hMessage" th:utext="${commonContext.message}" id="hMessage" name="hMessage"></div>
+</div>
+</header>

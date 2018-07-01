@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+　　<link rel="stylesheet" media="all" th:href="@{/css/stylesheet.css}"/>
+　　<script src="/script/javascript.js" th:src="@{/script/jquery-3.3.1.min.js}"></script>
+　　<script src="/script/javascript.js" th:src="@{/script/commonjs.js}"></script>
+　　<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+　　<title>King Kang TOP</title>
+  <script type="text/javascript">
+  function calcTotal() {
+	  var totalMin = 0;
+	  $("input[type='text'][name$=workTime]").each(function() {
+		  totalMin = totalMin + convHourToMin($(this).val());
+      });
+	  var totalHour = convMinToHour(totalMin);
+	  $('#total').val(addColon(totalHour));
+  }
+
+  $(document).ready(function() {
+    $("input[name$=Time]").keyup(function() {
+    });
+    $("input[type='text'][name$=Time]").focusout(function() {
+    	var tstr = $(this).val();
+    	if (IsNumber(tstr)) {
+    		$(this).val(addColon(tstr));
+    	} else {
+    		$(this).val("");
+    	}
+    	var thisName = $(this).attr('name');
+    	var dotPos = thisName.indexOf(".");
+    	var baseName = thisName.substr(0, dotPos);
+    	// 計算開始時刻
+    	var startName = baseName + ".calcStartTime";
+    	startName = getJQueryName(startName);
+    	// 計算終了時刻
+    	var endName = baseName + ".calcEndTime";
+    	endName = getJQueryName(endName);
+    	// 勤務時間
+    	var workName = baseName + ".workTime";
+    	workName = getJQueryName(workName);
+		// 休憩時間
+		var cvName = baseName + ".correctValue";
+		cvName = getJQueryName(cvName);
+    	if (thisName.slice(-9) == "StartTime") {
+    		// calcStartTime設定
+    		$('#' + startName).val(timeCutOff($(this).val(), $('#workTimeTruncUnit').val(), false));
+    	} else {
+    		// calcEndTime設定
+    		$('#' + endName).val(timeCutOff($(this).val(), $('#workTimeTruncUnit').val(), true));
+    	}
+    	if ($('#' + startName).val() == null || $('#' + startName).val().length == 0) {
+    		$('#' + workName).val("");
+    		$('#' + cvName).val("");
+    		return;
+    	}
+    	if ($('#' + endName).val() == null || $('#' + endName).val().length == 0) {
+    		$('#' + workName).val("");
+    		$('#' + cvName).val("");
+    		return;
+    	}
+    	// 勤務時間設定
+    	var workMinWithoutRest = calcTimeDiffWithoutRest($('#' + startName).val(), $('#' + endName).val(), $('#restTime').val());
+    	var workHourWithoutRest = convMinToHour(workMinWithoutRest);
+		$('#' + workName).val(addColon(workHourWithoutRest));
+		// 休憩時間設定
+		var workMin = calcTimeDiff($('#' + startName).val(), $('#' + endName).val());
+		$('#' + cvName).val(workMin - workMinWithoutRest);
+		// 合計算出
+		calcTotal();
+    });
+    $("input[type='text'][name$=Time]").focusin(function() {
+    	var tstr = $(this).val();
+    	$(this).val(removeColon(tstr));
+    	$(this).select();
+    });
+    // 初期表示時の計算
+    calcTotal();
+  });
+  </script>
+</head>
+<body>
+  <div th:replace="parts/header::header"></div>
+
+  <div class="main">
+    <form action="/top" th:action="@{/top}" th:object="${topForm}" method="post">
+      <table align="center">
+        <tr>
+          <td><input class="invButton" disabled="disabled" name="worktime" value="TIME"></td>
+          <td><input class="button" type="submit" name="trans" value="TRANS"></td>
+          <td><input class="button" type="submit" name="expns" value="EXPNS"></td>
+        </tr>
+      </table>
+      <input type="hidden" th:field="*{workTimeTruncUnit}">
+      <input type="hidden" th:field="*{restTime}">
+      <table class="noborder" style="width:320px;" align="center">
+        <tr>
+          <td style="width:90px;"><label for="groupId">GROUP</label></td>
+          <td style="width:160px;">
+            <select style="width:160px;" id="groupId" name="groupId" th:field="*{selectedGroupId}">
+              <option th:each="group : ${groups}" th:value="${group.groupId}" th:text="${group.groupName}">&nbsp;</option>
+            </select>
+          </td>
+          <td style="width:90px;"><label for="year">YEAR</label></td>
+          <td style="width:60px;">
+            <select style="width:70px;" id="year" name="year" th:field="*{selectedYy}">
+              <option th:each="year : ${years}" th:value="${year}" th:text="${year}">&nbsp;</option>
+            </select>
+          </td>
+          <td style="width:90px;"><label for="month">MONTH</label></td>
+          <td style="width:60px;">
+            <select style="width:50px;" id="month" name="month" th:field="*{selectedMm}">
+              <option value="01" >01</option>
+              <option value="02" >02</option>
+              <option value="03" >03</option>
+              <option value="04" >04</option>
+              <option value="05" >05</option>
+              <option value="06" >06</option>
+              <option value="07" >07</option>
+              <option value="08" >08</option>
+              <option value="09" >09</option>
+              <option value="10" >10</option>
+              <option value="11" >11</option>
+              <option value="12" >12</option>
+            </select>
+          </td>
+          <td><input class="smallButton" type="submit" name="change" value="CHANGE"></td>
+        </tr>
+      </table>
+    <table class="noborder" align="center">
+      <tr>
+        <td style="width:32px;">日</td>
+        <td style="width:50px;">曜日</td>
+        <td style="width:42px;">開始時刻</td>
+        <td style="width:42px;">終了時刻</td>
+        <td style="width:122px;">備考</td>
+        <td style="width:42px;">休憩(min)</td>
+        <td style="width:46px;">勤務時間</td>
+      </tr>
+      <th:block th:each="workTime,iterStat : ${workTimes}">
+      <tr th:class="${workTime.holidayCd} == '0' ? 'tron' : 'troff'">
+        <td th:text="${workTime.calendarDD}"></td>
+        <td th:text="${workTime.weekdayName}"></td>
+        <td>
+          <input type="hidden" th:attr="name='workTimes[' + __${iterStat.index}__ + '].calendarDD',id='workTimes[' + __${iterStat.index}__ + '].calendarDD'" th:value="*{workTimes[__${iterStat.index}__].calendarDD}">
+          <input type="text" style="width:40px;" th:attr="name='workTimes[' + __${iterStat.index}__ + '].workStartTime',id='workTimes[' + __${iterStat.index}__ + '].workStartTime'" th:value="*{workTimes[__${iterStat.index}__].workStartTime}">
+          <input type="hidden" th:attr="name='workTimes[' + __${iterStat.index}__ + '].calcStartTime',id='workTimes[' + __${iterStat.index}__ + '].calcStartTime'" th:value="*{workTimes[__${iterStat.index}__].calcStartTime}">
+        </td>
+        <td>
+          <input type="text" style="width:40px;" th:attr="name='workTimes[' + __${iterStat.index}__ + '].workEndTime',id='workTimes[' + __${iterStat.index}__ + '].workEndTime'" th:value="*{workTimes[__${iterStat.index}__].workEndTime}">
+          <input type="hidden" th:attr="name='workTimes[' + __${iterStat.index}__ + '].calcEndTime',id='workTimes[' + __${iterStat.index}__ + '].calcEndTime'" th:value="*{workTimes[__${iterStat.index}__].calcEndTime}">
+        </td>
+        <td><input type="text" style="width:120px;" th:attr="name='workTimes[' + __${iterStat.index}__ + '].remark',id='workTimes[' + __${iterStat.index}__ + '].remark'" th:value="*{workTimes[__${iterStat.index}__].remark}"></td>
+        <td><input type="text" style="width:40px;text-align:right;" readonly th:attr="name='workTimes[' + __${iterStat.index}__ + '].correctValue',id='workTimes[' + __${iterStat.index}__ + '].correctValue'" th:value="*{workTimes[__${iterStat.index}__].correctValue}"></td>
+        <td><input type="text" style="width:44px;text-align:right;" readonly th:attr="name='workTimes[' + __${iterStat.index}__ + '].workTime',id='workTimes[' + __${iterStat.index}__ + '].workTime'" th:value="*{workTimes[__${iterStat.index}__].workTime}"></td>
+      </tr>
+      </th:block>
+      <tr>
+        <td colspan="5"></td>
+        <td>合計</td>
+        <td><input type="text" style="width:44px;text-align:right;" name="total" id="total" readonly></td>
+      </tr>
+      <tr>
+        <td colspan="7"><input class="button" type="submit" name="save" value="SAVE"></td>
+      </tr>
+    </table>
+    </form>
+  </div>
+
+  <div th:replace="parts/footer::footer"></div>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+　　<link rel="stylesheet" media="all" th:href="@{/css/stylesheet.css}"/>
+　　<script src="/script/javascript.js" th:src="@{/script/jquery-3.3.1.min.js}"></script>
+　　<script src="/script/javascript.js" th:src="@{/script/commonjs.js}"></script>
+　　<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+　　<title>4Q TOP</title>
+  <script type="text/javascript">
+  $(document).ready(function() {
+　　　　<!-- groupId -->
+　　　　$("#groupId").change(function () {
+    $("#questionGroupId").empty();
+      $('#groupDTO').children('div').each( function( index1, eleGroup ) {
+        if (eleGroup.id == $("#groupId").val()) {
+          var $qg = $(eleGroup);
+          $qg.children('div').each( function( index2, eleQuestionGroup ) {
+            var option = $('<option />');
+            option.val(eleQuestionGroup.id);
+            option.html(eleQuestionGroup.innerText);
+            $('#questionGroupId').append(option);
+          });
+        }
+	  })
+    })
+    .trigger('change');
+  });
+  </script>
+</head>
+<body>
+  <div th:replace="parts/header::header"></div>
+
+  <div class="main">
+    <form action="/top" th:action="@{/top}" th:object="${topForm}" method="post">
+      <table class="noborder" style="width:320px;" align="center">
+        <tr>
+          <td style="width:160px;"><label for="groupId">グループ</label></td>
+          <td style="width:160px;">
+            <select style="width:160px;" id="groupId" name="groupId">
+              <option value="0"></option>
+              <option th:each="groupDTO : ${groupDTOs}" th:value="${groupDTO.groupId}" th:text="${groupDTO.groupName}">&nbsp;</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td style="width:160px;"><label for="questionGroupId">設問グループ</label></td>
+          <td style="width:160px;">
+            <select style="width:160px;" id="questionGroupId" name="questionGroupId">
+              <option value="0"></option>
+              <option value="1">セキュリティ教育</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+          <td colspan="2"><input class="button" type="submit" name="question" value="START"></td>
+        </tr>
+        <tr>
+          <td colspan="2"><input class="button" type="submit" name="history" value="HISTORY"></td>
+        </tr>
+      </table>
+    </form>
+  </div>
+  
+  <div class="data">
+    <div id="groupDTO">
+      <th:block th:each="groupDTO : ${groupDTOs}">      
+        <div th:id="${groupDTO.groupId}" th:name="${groupDTO.groupName}">
+          <div th:each="questionGroupDTO : ${groupDTO.questionGroupDTOs}" th:id="${questionGroupDTO.questionGroupId}" th:text="${questionGroupDTO.questionGroupName}">
+          </div>
+        </div>
+      </th:block>
+    </div>
+  </div>
+  
+  <div th:replace="parts/footer::footer"></div>
+</body>
+</html>

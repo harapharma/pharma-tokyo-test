@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" media="all" th:href="@{/css/stylesheet.css}"/>
+<script src="/script/javascript.js" th:src="@{/script/jquery-3.3.1.min.js}"></script>
+<script src="/script/javascript.js" th:src="@{/script/commonjs.js}"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+  <script type="text/javascript">
+  function addDetail() {
+    var num = $('#detailTable tr').length - 3;
+    var detail = '<tr class="trodd">' +
+      '<td><input type="text" style="width:30px;" value="" name="transExpDTOs[' + num + '].calendarDd" id="transExpDTOs[' + num + '].calendarDd"></td>' +
+      '<td><input type="text" style="width:120px;" value="" name="transExpDTOs[' + num + '].destination" id="transExpDTOs[' + num + '].destination"></td>' +
+      '<td><input type="text" style="width:120px;" value="" name="transExpDTOs[' + num + '].business" id="transExpDTOs[' + num + '].business"></td>' +
+      '<td><input type="text" style="width:60px;" value="" name="transExpDTOs[' + num + '].transportFacility" id="transExpDTOs[' + num + '].transportFacility"></td>' +
+      '<td><input type="text" style="width:80px;" value="" name="transExpDTOs[' + num + '].departure" id="transExpDTOs[' + num + '].departure"></td>' +
+      '<td><input type="text" style="width:80px;" value="" name="transExpDTOs[' + num + '].arrival" id="transExpDTOs[' + num + '].arrival"></td>' +
+      '<td>' +
+      '  <select style="width:40px;" name="transExpDTOs[' + num + '].oneRoundCd" id="transExpDTOs[' + num + '].oneRoundCd">' +
+      '    <option value="----" ></option>' +
+      '    <option value="A001" >片</option>' +
+      '    <option value="A002" >往</option>' +
+      '  </select>' +
+      '</td>' +
+      '<td><input type="text" style="width:54px;text-align:right;" value="" name="transExpDTOs[' + num + '].expenseAmount" id="transExpDTOs[' + num + '].expenseAmount"></td>' +
+      '<td><input type="text" style="width:54px;text-align:right;" value="" name="transExpDTOs[' + num + '].temporaryMoney" id="transExpDTOs[' + num + '].temporaryMoney"></td>' +
+      '</tr>';
+    $('#detailTable tr').eq(num).after(detail);
+  }
+  //
+  function calcExpenseAmountTotal() {
+    var totalAmnt = 0;
+    $("input[type='text'][name$=expenseAmount]").each(function() {
+      var amnt = 0;
+      var amntStr = delComma($(this).val());
+      if (amntStr != "" && IsNumber(amntStr)) {
+        totalAmnt = totalAmnt + parseInt(amntStr);
+      }
+    });
+    $('#expenseTotal').val(addComma(totalAmnt));
+  }
+  //
+  function calcTemporaryMoneyTotal() {
+    var totalAmnt = 0;
+    $("input[type='text'][name$=temporaryMoney]").each(function() {
+      var amnt = 0;
+      var amntStr = delComma($(this).val());
+      if (amntStr != "" && IsNumber(amntStr)) {
+        totalAmnt = totalAmnt + parseInt(amntStr);
+      }
+    });
+    $('#temporaryTotal').val(addComma(totalAmnt));
+  }
+  // On Ready
+  $(document).ready(function() {
+    //
+    addDetail();
+    //
+    calcExpenseAmountTotal();
+    //
+    calcTemporaryMoneyTotal();
+    // 
+    $("input[type='text'][name$=expenseAmount]").focusout(function() {
+      var tstr = $(this).val();
+      if (IsNumber(tstr)) {
+        $(this).val(addComma(tstr));
+      } else {
+        $(this).val("");
+      }
+      calcExpenseAmountTotal();
+	});
+    // 
+    $("input[type='text'][name$=temporaryMoney]").focusout(function() {
+      var tstr = $(this).val();
+      if (IsNumber(tstr)) {
+        $(this).val(addComma(tstr));
+      } else {
+        $(this).val("");
+      }
+      calcTemporaryMoneyTotal();
+    });
+  });
+  </script>
+</head>
+<body>
+  <div th:replace="parts/header::header"></div>
+
+  <div class="main">
+  <form id="mainForm" name="mainForm" action="/transexp" th:action="@{/transexp}" th:object="${transExpForm}" method="post">
+        <table align="center">
+        <tr>
+          <td><input class="button" type="submit" name="worktime" value="TIME"></td>
+          <td><input class="invButton" disabled="disabled" name="trans" value="TRANS"></td>
+          <td><input class="button" type="submit" name="expns" value="EXPNS"></td>
+        </tr>
+      </table>
+    <table class="noborder" style="width:320px;" align="center">
+      <tr>
+        <td style="width:90px;"><label for="groupId">GROUP</label></td>
+        <td style="width:160px;">
+          <select style="width:160px;" id="groupId" name="groupId" th:field="*{selectedGroupId}">
+            <option th:each="group : ${groups}" th:value="${group.groupId}" th:text="${group.groupName}">&nbsp;</option>
+          </select>
+        </td>
+        <td style="width:90px;"><label for="year">YEAR</label></td>
+        <td style="width:60px;">
+          <select style="width:70px;" id="year" name="year" th:field="*{selectedYy}">
+            <option th:each="year : ${years}" th:value="${year}" th:text="${year}">&nbsp;</option>
+          </select>
+        </td>
+        <td style="width:90px;"><label for="month">MONTH</label></td>
+        <td style="width:60px;">
+          <select style="width:50px;" id="month" name="month" th:field="*{selectedMm}">
+            <option value="01" >01</option>
+            <option value="02" >02</option>
+            <option value="03" >03</option>
+            <option value="04" >04</option>
+            <option value="05" >05</option>
+            <option value="06" >06</option>
+            <option value="07" >07</option>
+            <option value="08" >08</option>
+            <option value="09" >09</option>
+            <option value="10" >10</option>
+            <option value="11" >11</option>
+            <option value="12" >12</option>
+          </select>
+        </td>
+        <td><input class="smallButton" type="submit" name="change" value="CHANGE"></td>
+      </tr>
+    </table>
+    <table id="detailTable" class="noborder" align="center">
+      <tr>
+        <td style="width:32px;">日</td>
+        <td style="width:122px;">目的地</td>
+        <td style="width:122px;">用件</td>
+        <td style="width:62px;">交通機関</td>
+        <td style="width:82px;">出発</td>
+        <td style="width:82px;">到着</td>
+        <td style="width:42px;">片/往</td>
+        <td style="width:56px;">金額</td>
+        <td style="width:56px;">仮払</td>
+      </tr>
+      <th:block th:each="transExpDTO,iterStat : ${transExpDTOs}">
+      <tr th:class="${iterStat.odd}? 'trodd' : 'treven'">
+        <td><input type="text" style="width:30px;" th:attr="name='transExpDTOs[' + __${iterStat.index}__ + '].calendarDd',id='transExpDTOs[' + __${iterStat.index}__ + '].calendarDd'" th:value="*{transExpDTOs[__${iterStat.index}__].calendarDd}"></td>
+        <td><input type="text" style="width:120px;" th:attr="name='transExpDTOs[' + __${iterStat.index}__ + '].destination',id='transExpDTOs[' + __${iterStat.index}__ + '].destination'" th:value="*{transExpDTOs[__${iterStat.index}__].destination}"></td>
+        <td><input type="text" style="width:120px;" th:attr="name='transExpDTOs[' + __${iterStat.index}__ + '].business',id='transExpDTOs[' + __${iterStat.index}__ + '].business'" th:value="*{transExpDTOs[__${iterStat.index}__].business}"></td>
+        <td><input type="text" style="width:60px;" th:attr="name='transExpDTOs[' + __${iterStat.index}__ + '].transportFacility',id='transExpDTOs[' + __${iterStat.index}__ + '].transportFacility'" th:value="*{transExpDTOs[__${iterStat.index}__].transportFacility}"></td>
+        <td><input type="text" style="width:80px;" th:attr="name='transExpDTOs[' + __${iterStat.index}__ + '].departure',id='transExpDTOs[' + __${iterStat.index}__ + '].departure'" th:value="*{transExpDTOs[__${iterStat.index}__].departure}"></td>
+        <td><input type="text" style="width:80px;" th:attr="name='transExpDTOs[' + __${iterStat.index}__ + '].arrival',id='transExpDTOs[' + __${iterStat.index}__ + '].arrival'" th:value="*{transExpDTOs[__${iterStat.index}__].arrival}"></td>
+        <td>
+          <select style="width:40px;" th:attr="name='transExpDTOs[' + __${iterStat.index}__ + '].oneRoundCd',id='transExpDTOs[' + __${iterStat.index}__ + '].oneRoundCd'" th:field="*{transExpDTOs[__${iterStat.index}__].oneRoundCd}">
+            <option value="----" ></option>
+            <option value="A001" >片</option>
+            <option value="A002" >往</option>
+          </select>
+        </td>
+        <td><input type="text" style="width:54px;text-align:right;" th:attr="name='transExpDTOs[' + __${iterStat.index}__ + '].expenseAmount',id='transExpDTOs[' + __${iterStat.index}__ + '].expenseAmount'" th:value="*{transExpDTOs[__${iterStat.index}__].expenseAmount}"></td>
+        <td><input type="text" style="width:54px;text-align:right;" th:attr="name='transExpDTOs[' + __${iterStat.index}__ + '].temporaryMoney',id='transExpDTOs[' + __${iterStat.index}__ + '].temporaryMoney'" th:value="*{transExpDTOs[__${iterStat.index}__].temporaryMoney}"></td>
+      </tr>
+      </th:block>
+      <tr>
+        <td colspan="2"><input class="smallButton" type="button" name="plus" value="+" onclick="addDetail();"></td>
+        <td colspan="4"></td>
+        <td>合計</td>
+        <td><input type="text" style="width:54px;text-align:right;" name="expenseTotal" id="expenseTotal" readonly></td>
+        <td><input type="text" style="width:54px;text-align:right;" name="temporaryTotal" id="temporaryTotal" readonly></td>
+      </tr>
+      <tr>
+        <td colspan="9"><input class="button" type="submit" name="save" value="SAVE"></td>
+      </tr>
+    </table>
+  </form>
+  </div>
+  
+  <div th:replace="parts/footer::footer"></div>
+</body>
+</html>

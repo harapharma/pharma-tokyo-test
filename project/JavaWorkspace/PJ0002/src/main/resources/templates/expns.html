@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" media="all" th:href="@{/css/stylesheet.css}"/>
+<script src="/script/javascript.js" th:src="@{/script/jquery-3.3.1.min.js}"></script>
+<script src="/script/javascript.js" th:src="@{/script/commonjs.js}"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+  <div th:replace="parts/header::header"></div>
+
+  <form action="/result" th:action="@{/result}" th:object="${resultForm}" method="post">
+    <table class="noborder" style="width:320px;" align="center">
+      <tr>
+        <td colspan="2"><span th:utext="*{message}"></span></td>
+      </tr>
+      <tr>
+        <td><label>設問グループ</label></td>
+        <td>
+          <span th:text="*{questionGroupName}"></span>
+        </td>
+      </tr>
+      <tr>
+        <td><label>解答日時</label></td>
+        <td>
+          <span th:text="*{answerDatime}"></span>
+        </td>
+      </tr>
+      <tr>
+        <td><label>設問数</label></td>
+        <td>
+          <span th:text="*{questionCnt}"></span>
+        </td>
+      </tr>
+      <tr>
+        <td><label>必要正解数</label></td>
+        <td>
+          <span th:text="*{needCorrectCnt}"></span>
+        </td>
+      </tr>
+      <tr>
+        <td><label>正解数</label></td>
+        <td>
+          <span th:text="*{correctCnt}"></span>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          &nbsp;
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <input class="button" type="submit" name="top" value="TOP">
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <input class="button" type="submit" name="history" value="HISTORY">
+        </td>
+      </tr>
+    </table>
+  </form>
+  
+  <div th:replace="parts/footer::footer"></div>
+</body>
+</html>

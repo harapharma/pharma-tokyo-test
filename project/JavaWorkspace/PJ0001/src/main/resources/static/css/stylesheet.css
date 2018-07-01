@@ -1,0 +1,150 @@
+body {
+  height:100%;
+  margin:0;
+  padding:0;
+  background-color  : #e6ffe6;
+}
+
+table.noborder {
+  font-style    : bold;
+  text-align    : center;
+  background-color  : #e6ffe6;
+}
+
+tr.trodd {
+  background-color:white;
+}
+
+tr.treven {
+  background-color:aliceblue;
+}
+
+tr.tron {
+  background-color:white;
+}
+
+tr.troff {
+  background-color:gray;
+}
+
+div.qpanel {
+  font-style    : bold;
+  text-align    : left;
+  overflow      : hidden;
+  background-color  : #e6ffe6;
+  border        : solid 2px;
+  border-bottom     : solid 1px;
+}
+
+div.question {
+  font-style    : bold;
+  text-align    : left;
+  overflow      : hidden;
+  background-color  : #fff5f5;
+  border-bottom     : solid 1px;
+}
+
+div.answer {
+  font-style    : bold;
+  text-align    : left;
+  overflow      : hidden;
+  background-color  : #ffffff;
+}
+
+div.hUserId, div.hLoginDateTime {
+  float         : left;
+  text-align    : left;
+  width         : 100px;
+}
+
+div.hLogout {
+  float         : right;
+  text-align    : right;
+  width         : 100px;
+}
+
+div.hInfo, div.hMessage {
+  font-size     : 1.6em;
+  float         : left;
+  text-align    : center;
+  width         : calc( 100% - 200px ) ;
+  background-color  : #fff5f5;
+}
+
+div.hTop, div.hBottom {
+  border       : none;
+  width        : 100%;
+  clear        : both;
+}
+
+div.copyrights {
+  text-align    : center;
+}
+
+div.data {
+  display       : none;
+}
+
+.header {
+  font-size     : 0.7em;
+  width         : 98%;
+  height        : 50px;
+  background-color  : #e6ffe6;
+}
+
+.main {
+  text-align    : center;
+  margin        : 4px 4px;
+  clear         : both;
+}
+
+.footer {
+  text-align    : center;
+  font-size:1.0em;
+  width         : 98%;
+  height        : 50px;
+  background-color  : #e6ffe6;
+}
+
+input.button {
+  font-size     : 1.2em;
+  font-weight: bold;
+  width         : 140px;
+  height        : 34px;
+  text-align    : center;
+  background-color: #009000;
+  color: #fff;
+  border-style: none;
+  -moz-border-radius: 5px; 
+  -webkit-border-radius: 5px; 
+  border-radius: 5px;
+  cursor : pointer;
+}
+
+input.button:hover {
+  background-color: #30c030;
+  cursor : pointer;
+  color: #fff;
+}
+
+
+input.smallButton {
+  font-size     : 0.9em;
+  font-weight: bold;
+  width         : 70px;
+  height        : 20px;
+  text-align    : center;
+  background-color: #009000;
+  color: #fff;
+  border-style: none;
+  -moz-border-radius: 5px; 
+  -webkit-border-radius: 5px; 
+  border-radius: 5px;
+  cursor : pointer;
+}
+
+input.smallButton:hover {
+  background-color: #30c030;
+  cursor : pointer;
+  color: #fff;
+}

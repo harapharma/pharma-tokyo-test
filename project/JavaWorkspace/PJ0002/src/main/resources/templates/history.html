@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" media="all" th:href="@{/css/stylesheet.css}"/>
+<script src="/script/javascript.js" th:src="@{/script/jquery-3.3.1.min.js}"></script>
+<script src="/script/javascript.js" th:src="@{/script/commonjs.js}"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+  <div th:replace="parts/header::header"></div>
+
+  <form action="/history" th:action="@{/history}" th:object="${historyForm}" method="post">
+    <table class="noborder" align="center">
+      <tr>
+        <th>履歴</th>
+      </tr>
+      <tr>
+        <td style="width:40px;">No.</td>
+        <td style="width:180px;">設問グループ</td>
+        <td style="width:180px;">解答日時</td>
+        <td style="width:80px;">設問数</td>
+        <td style="width:80px;">必要正解数</td>
+        <td style="width:80px;">正解数</td>
+      </tr>
+      <th:block th:each="answer,iterStat : ${answerList}">
+      <tr th:class="${iterStat.odd}? 'trodd' : 'treven'">
+        <td th:text="${iterStat.count}"></td>
+        <td th:text="${answer.questionGroupName}"></td>
+        <td th:text="${answer.answerDatime}"></td>
+        <td th:text="${answer.questionCnt}"></td>
+        <td th:text="${answer.needCorrectCnt}"></td>
+        <td th:text="${answer.correctCnt}"></td>
+      </tr>
+      </th:block>
+      <tr>
+        <td colspan="6"><input class="button" type="submit" name="top" value="TOP"></td>
+      </tr>
+    </table>
+  </form>
+  
+  <div th:replace="parts/footer::footer"></div>
+</body>
+</html>

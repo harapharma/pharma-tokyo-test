@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+　　<link rel="stylesheet" media="all" th:href="@{/css/stylesheet.css}"/>
+　　<script src="/script/javascript.js" th:src="@{/script/jquery-3.3.1.min.js}"></script>
+　　<script src="/script/javascript.js" th:src="@{/script/commonjs.js}"></script>
+　　<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+　　<title>King Kang LOGIN</title>
+  <script type="text/javascript">
+  $(document).ready(function() {
+　　　　<!-- UID -->
+    $('#uid').keyup(function() {
+      if ($('#uid').val().length >= $('#uid').attr('maxlength')) {
+　　　　　　　　 $('#pswd').focus();
+      }
+    });
+  });
+  </script>
+</head>
+<body>
+  <div class="main">
+    <form action="/index" th:action="@{/index}" th:object="${indexForm}" method="post">
+      <table class="noborder" style="width:320px;" align="center">
+        <tr>
+          <td colspan="2"><img th:src="@{/img/logo.png}"></td>
+        </tr>
+        <tr>
+          <td colspan="2"><p style="font-size:0.7em;">Working time management system for different types of office.</p></td>
+        </tr>
+        <tr>
+          <td style="width:160px;text-align:right;"><label for="uid">ユーザID</label></td>
+          <td style="width:160px;text-align:left;"><input style="width:110px;" type="text" id="uid" name="uid" th:value="*{uid}" maxlength="8" tabindex="1"/></td>
+        </tr>
+        <tr>
+          <td style="width:160px;text-align:right;"><label for="pswd">パスワード</label></td>
+          <td style="width:160px;text-align:left;"><input style="width:110px;" type="password" id="pswd" name="pswd" th:value="*{pswd}" tabindex="2"/></td>
+        </tr>
+        <tr>
+          <td colspan="2"><div th:text="${commonContext == null}? '' : ${commonContext.message}"></div></td>
+        </tr>
+        <tr th:unless="${expired}">
+          <td colspan="2"><input class="button" type="submit" name="login" value="LOGIN" tabindex="3"></td>
+        </tr>
+        <tr th:if="${expired}">
+          <td style="width:160px;text-align:right;"><label for="pswd">新パスワード</label></td>
+          <td style="width:160px;text-align:left;"><input style="width:110px;" type="password" id="pswd1" name="pswd1" th:value="*{pswd1}" tabindex="4"/></td>
+        </tr>
+        <tr th:if="${expired}">
+          <td style="width:160px;text-align:right;"><label for="pswd">新パスワード(確認)</label></td>
+          <td style="width:160px;text-align:left;"><input style="width:110px;" type="password" id="pswd2" name="pswd2" th:value="*{pswd2}" tabindex="5"/></td>
+        </tr>
+        <tr th:if="${expired}">
+          <td colspan="2"><input class="button" type="submit" name="changepswd" value="NEWPASS" tabindex="6"></td>
+        </tr>
+      </table>
+    </form>
+  </div>
+</body>
+</html>

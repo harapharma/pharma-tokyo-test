@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" media="all" th:href="@{/css/stylesheet.css}"/>
+<script src="/script/javascript.js" th:src="@{/script/jquery-3.3.1.min.js}"></script>
+<script src="/script/javascript.js" th:src="@{/script/commonjs.js}"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+  <div th:replace="parts/header::header"></div>
+
+  <div class="main">
+  <form role="form" action="/confirm" th:action="@{/confirm}" th:object="${confirmForm}" method="post">
+    <th:block th:each="question,iterStat : ${questionList}">
+      <div class="qpanel">
+        <div class="question">
+          <p th:utext="${iterStat.count} + '. ' + ${question.questionSentence}"></p>
+        </div>
+        <div class="answer">
+          <span th:if="${question.selection == '1'}">
+            <img th:src="@{/img/check.png}">
+          </span>
+          <span th:unless="${question.selection == '1'}">
+            <img th:src="@{/img/uncheck.png}">
+          </span>
+          <span th:utext="'(1) ' + ${question.answerSentence1}"></span><br/>
+          <span th:if="${question.selection == '2'}">
+            <img th:src="@{/img/check.png}">
+          </span>
+          <span th:unless="${question.selection == '2'}">
+            <img th:src="@{/img/uncheck.png}">
+          </span>
+          <span th:utext="'(2) ' + ${question.answerSentence2}"></span><br/>
+          <span th:if="${question.selection == '3'}">
+            <img th:src="@{/img/check.png}">
+          </span>
+          <span th:unless="${question.selection == '3'}">
+            <img th:src="@{/img/uncheck.png}">
+          </span>
+          <span th:utext="'(3) ' + ${question.answerSentence3}"></span><br/>
+          <span th:if="${question.selection == '4'}">
+            <img th:src="@{/img/check.png}">
+          </span>
+          <span th:unless="${question.selection == '4'}">
+            <img th:src="@{/img/uncheck.png}">
+          </span>
+          <span th:utext="'(4) ' + ${question.answerSentence4}"></span><br/>
+        </div>
+      </div>
+    </th:block>
+    <p>&nbsp;</p>
+    <input class="button" type="submit" name="return" value="RETURN">
+    <input class="button" type="submit" name="result" value="FINISH">
+  </form>
+  </div>
+  
+  <div th:replace="parts/footer::footer"></div>
+</body>
+</html>

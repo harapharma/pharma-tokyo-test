@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" media="all" th:href="@{/css/stylesheet.css}"/>
+<script src="/script/javascript.js" th:src="@{/script/jquery-3.3.1.min.js}"></script>
+<script src="/script/javascript.js" th:src="@{/script/commonjs.js}"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>4Q QUESTION</title>
+  <script type="text/javascript">
+  $(document).ready(function() {
+    $("#confirm").click(function(){
+      var countChecked = 0;
+      $("input[type=radio]:checked").each(function(index){
+    	  countChecked = countChecked + 1;
+      });
+      var qCnt = $("#questionCnt").val();
+      if (qCnt == countChecked) {
+        $('#mainForm').submit();
+      } else {
+    	  var rest = qCnt - countChecked;
+        $('#hMessage').html("残 " + rest + " 問");
+      }
+    });
+  });
+  </script>
+</head>
+<body>
+  <div th:replace="parts/header::header"></div>
+
+  <div class="main">
+  <form id="mainForm" name="mainForm" action="/question" th:action="@{/question}" th:object="${questionForm}" method="post">
+    <input type="hidden" id="questionCnt" name="questionCnt" th:value="${#lists.size(questionList)}" />
+    <th:block th:each="question,iterStat : ${questionList}">
+      <div class="qpanel">
+        <div class="question">
+          <p th:utext="${iterStat.count} + '. ' + ${question.questionSentence}"></p>
+        </div>
+        <div class="answer">
+          <input type="radio" th:value="1" th:field="*{ans[__${iterStat.count -1}__]}" />
+          <label th:utext="'(1) ' + ${question.answerSentence1}"></label><br/>
+          <input type="radio" th:value="2" th:field="*{ans[__${iterStat.count -1}__]}" />
+          <label th:utext="'(2) ' + ${question.answerSentence2}"></label><br/>
+          <input type="radio" th:value="3" th:field="*{ans[__${iterStat.count -1}__]}" />
+          <label th:utext="'(3) ' + ${question.answerSentence3}"></label><br/>
+          <input type="radio" th:value="4" th:field="*{ans[__${iterStat.count -1}__]}" />
+          <label th:utext="'(4) ' + ${question.answerSentence4}"></label><br/>
+        </div>
+      </div>
+    </th:block>
+    <p>&nbsp;</p>
+    <input class="button" type="button" id="confirm" name="confirm" value="CONFIRM">
+  </form>
+  </div>
+  
+  <div th:replace="parts/footer::footer"></div>
+</body>
+</html>

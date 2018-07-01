@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+  <environments default="common">
+    <environment id="common">
+      <transactionManager type="JDBC" />
+      <dataSource type="POOLED">
+        <property name="driver" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost:3306/COMMON?useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=false" />
+        <property name="username" value="common" />
+        <property name="password" value="p@ssw0rd" />
+      </dataSource>
+    </environment>
+    <environment id="pj0001">
+      <transactionManager type="JDBC" />
+      <dataSource type="POOLED">
+        <property name="driver" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost:3306/PJ0001?useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=false" />
+        <property name="username" value="pj0001" />
+        <property name="password" value="p@ssw0rd" />
+      </dataSource>
+    </environment>
+  </environments>
+
+  <mappers>
+    <package name="jp.co.pds.common.dao.mapper" />
+    <package name="jp.co.pds.PJ0001.dao.mapper" />
+  </mappers>
+ 
+</configuration>
